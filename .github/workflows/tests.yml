@@ -34,8 +34,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
-          start: 'pnpm run dev'
-          wait-on: 'http://localhost:3000'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}  # If you are recording runs on Cypress Dashboard
 
