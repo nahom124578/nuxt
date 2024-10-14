@@ -6,7 +6,7 @@ on:
       - nahom
   pull_request:
     branches:
-      - main  
+      - main_branch  
 
 jobs:
   cypress-run:
