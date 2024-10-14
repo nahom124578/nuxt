@@ -3,10 +3,10 @@ name: Cypress Tests
 on:
   push:
     branches:
-      - nahom_mitiku # Replace with your actual branch name
+      - nahom
   pull_request:
     branches:
-      - main  # You can change this to target a different branch as well
+      - main_branch  
 
 jobs:
   cypress-run:
@@ -34,8 +34,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
-          start: 'pnpm run dev'
-          wait-on: 'http://localhost:3000'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}  # If you are recording runs on Cypress Dashboard
 
