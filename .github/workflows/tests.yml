@@ -1,0 +1,52 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - nahom_mitiku # Replace with your actual branch name
+  pull_request:
+    branches:
+      - main  # You can change this to target a different branch as well
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.11.1'  # Ensure this matches your project’s Node version
+
+      - name: Install dependencies
+        run: |
+          pnpm install # Use pnpm since you're using pnpm for package management
+
+      - name: Start the application
+        run: |
+          pnpm run dev & # Start your app in the background
+          npx wait-on http://localhost:3000 # Wait until the local server is ready
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+          start: 'pnpm run dev'
+          wait-on: 'http://localhost:3000'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}  # If you are recording runs on Cypress Dashboard
+
+      - name: Archive Cypress test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Archive Cypress videos
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
